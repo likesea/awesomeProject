@@ -4,7 +4,7 @@ import "fmt"
 
 var res [][]int = make([][]int,0)
 func main() {
-	fmt.Println(twoSum([]int{3,2,4},6))
+	fmt.Println(threeSumTarget([]int{-1, 0, 1, 2, -1, -4},0))
 }
 
 func permute(nums []int,track []int){

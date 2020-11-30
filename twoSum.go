@@ -2,27 +2,23 @@ package main
 
 import "sort"
 
-func twoSum(nums []int, target int) []int {
+func twoSumTarget(nums []int, start int, target int) [][]int {
   length:=len(nums)
-  intvs:=make([]int,len(nums))
-  copy(intvs,nums)
   sort.Ints (nums)
-  i,j:=0,length-1
-  res:=make([]int,0)
+  i,j:=start,length-1
+  res:=make([][]int,0)
   for;i<j;{
-  	if nums[i]+nums[j]==target{
-		res =append(res, nums[i],nums[j])
-		break
-	}
-	if nums[i]+nums[j]>target{
-		j--
-	}
-	  if nums[i]+nums[j]<target{
-		  i++
+  	sum :=nums[i]+nums[j]
+  	left,right:=nums[i],nums[j]
+  	if sum<target{
+  		for ;i<j &&nums[i]==left; { i++}
+	} else if sum>target{
+		for ;i<j &&nums[j]==right; { j--}
+	}else {
+		res = append(res,[]int{nums[i],nums[j]})
+		for ;i<j &&nums[i]==left; { i++}
+		for ;i<j &&nums[j]==right; { j--}
 	  }
-  }
-  if len(res)!=0{
-  	return []int{indexOf(res[0],intvs),indexOf(res[1],intvs)}
   }
 	return res
 }
@@ -33,4 +29,23 @@ func indexOf(element int, data []int) (int) {
 		}
 	}
 	return -1    //not found.
+}
+
+func threeSumTarget(nums []int,target int) [][]int {
+	sort.Ints(nums)
+	length:=len(nums)
+	res := make([][]int,0)
+	for i:=0;i<length;i++{
+		r := twoSumTarget(nums,i+1,target-nums[i])
+		if r!=nil && len(r)!=0{
+			for j:=0;j<len(r);j++{
+				r[j] = append(r[j],nums[i])
+			}
+			res= append(res, r...)
+		}
+		for ;i<length-1 &&nums[i]==nums[i+1]; {
+			i++
+		}
+	}
+	return res
 }
