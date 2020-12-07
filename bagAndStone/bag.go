@@ -85,3 +85,18 @@ func init_canPartition2( W int)[]bool  {
 	m:=make([]bool,W);
 	return m
 }
+func change(amount int, coins []int) int {
+	if amount==0 {
+		return 1
+	}
+	dp:=make([]int,amount+1)
+	dp[0] = 1
+	for i:=1;i<len(coins)+1;i++{
+		for j:=1;j<amount+1;j++{
+			if j-coins[i-1]>=0{
+				dp[j]=dp[j]+dp[j-coins[i-1]]
+			}
+		}
+	}
+	return dp[amount]
+}
